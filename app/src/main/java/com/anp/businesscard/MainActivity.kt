@@ -7,6 +7,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -61,9 +62,17 @@ fun BusinessCard(name: String, modifier: Modifier = Modifier) {
         )
         Spacer(modifier = Modifier.height(8.dp))
         Text(
-            text = "Welcome to my business card app. ✌️",
-            modifier = Modifier.background(color = Color(0xFFD8FAEC)),
-            color = Color(0xFF455268)
+            text = "Welcome to my business card app.",
+            modifier = Modifier.background(color = Color(
+                when (isSystemInDarkTheme()) {
+                    false -> 0xFFDDFBEE
+                    else -> 0xFF527768
+                }
+            )),
+            color = Color(when (isSystemInDarkTheme()) {
+                false -> 0xFF999999
+                else -> 0xFFF3F3F3
+            })
         )
         SocialHandle(
             "github",
@@ -71,7 +80,7 @@ fun BusinessCard(name: String, modifier: Modifier = Modifier) {
             "https://github.com/atharva-potdar",
             Color(0xFFB1EA55),
             R.drawable.github,
-            96.dp
+            80.dp
         )
         SocialHandle(
             "instagram",
@@ -79,7 +88,7 @@ fun BusinessCard(name: String, modifier: Modifier = Modifier) {
             "https://instagram.com/atharva___potdar",
             Color(0xFFEC34A8),
             R.drawable.instagram,
-            96.dp
+            80.dp
         )
     }
 }
@@ -110,7 +119,7 @@ fun SocialHandle(
             painter = painterResource(id = id),
             contentDescription = "$site Logo",
             modifier = modifier
-                .padding(vertical = 4.dp)
+                .padding(vertical = 8.dp)
                 .size(iconSize)
         )
         Text(
