@@ -23,6 +23,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Call
 import androidx.compose.material.icons.rounded.Email
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -68,26 +69,26 @@ fun BusinessCard(name: String, email: String, phoneNumber: String, modifier: Mod
     ) {
         Text(
             text = "Hey. I'm $name.",
-            fontSize = 32.sp,
+//            fontSize = 32.sp,
+            style = MaterialTheme.typography.displaySmall
         )
         Spacer(modifier = Modifier.height(8.dp))
         Text(
             text = "Welcome to my business card app.",
-            modifier = Modifier
-                .background(
-                    color = Color(
-                        when (isSystemInDarkTheme()) {
-                            false -> 0xFFDDFBEE
-                            else -> 0xFFA4BAB1
-                        }
-                    )
-                )
-                .padding(4.dp),
-
+//            modifier = Modifier
+////                .background(
+////                    color =
+////                        when (isSystemInDarkTheme()) {
+////                            false -> Color(0xFFDDFBEE)
+////                            else -> Color(0xFFA4BAB1)
+////                        }
+////                )
+//                .padding(4.dp),
+            style = MaterialTheme.typography.titleLarge
             )
         Row(
             modifier = Modifier
-                .padding(top = 8.dp)
+                .padding(top = 12.dp)
                 .clickable(enabled = true, onClick = {
                     context.startActivity(Intent(Intent.ACTION_DIAL, "tel:$phoneNumber".toUri()))
                 })
@@ -98,7 +99,7 @@ fun BusinessCard(name: String, email: String, phoneNumber: String, modifier: Mod
         }
         Row(
             modifier = Modifier
-                .padding(top = 4.dp)
+                .padding(top = 8.dp)
                 .clickable(enabled = true, onClick = {
                     context.startActivity(Intent(Intent.ACTION_SENDTO, "mailto:$email".toUri()))
                 })) {
