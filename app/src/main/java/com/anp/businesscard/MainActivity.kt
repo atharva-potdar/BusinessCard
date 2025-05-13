@@ -10,9 +10,12 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -22,6 +25,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.anp.businesscard.ui.theme.BusinessCardTheme
@@ -45,44 +49,73 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun BusinessCard(name: String, modifier: Modifier = Modifier) {
-    val uriHandler = LocalUriHandler.current
+
     Column(
-        modifier = modifier.fillMaxSize(),
+        modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
         Text(
             text = "Hey. I'm $name.",
-            modifier = modifier.padding(bottom = 0.dp),
-            fontSize = 24.sp
+            fontSize = 24.sp,
         )
+        Spacer(modifier = Modifier.height(8.dp))
         Text(
             text = "Welcome to my business card app. ✌️",
-            modifier = modifier.background(color = Color(0xFFD8FAEC)),
+            modifier = Modifier.background(color = Color(0xFFD8FAEC)),
             color = Color(0xFF455268)
         )
+        SocialHandle(
+            "github",
+            "atharva-potdar",
+            "https://github.com/atharva-potdar",
+            Color(0xFFB1EA55),
+            R.drawable.github,
+            96.dp
+        )
+        SocialHandle(
+            "instagram",
+            "atharva___potdar",
+            "https://instagram.com/atharva___potdar",
+            Color(0xFFEC34A8),
+            R.drawable.instagram,
+            96.dp
+        )
+    }
+}
 
-        Row(
+@Composable
+fun SocialHandle(
+    site: String,
+    handle: String,
+    url: String,
+    color: Color,
+    id: Int,
+    iconSize: Dp,
+    modifier: Modifier = Modifier
+) {
+    val uriHandler = LocalUriHandler.current
+    Spacer(modifier = Modifier.height(24.dp))
+    Row(
+        modifier = modifier
+            .fillMaxWidth()
+            .background(color = color)
+            .clickable(
+                enabled = true,
+                onClick = { uriHandler.openUri(url) }),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceEvenly,
+    ) {
+        Image(
+            painter = painterResource(id = id),
+            contentDescription = "$site Logo",
             modifier = modifier
-                .fillMaxWidth()
-                .padding(top = 24.dp)
-                .background(color = Color(0xFFB1EA55))
-                .clickable(
-                    enabled = true,
-                    onClick = { uriHandler.openUri("https://github.com/atharva-potdar") }),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceEvenly,
-        ) {
-            Image(
-                painter = painterResource(id = R.drawable.github),
-                contentDescription = "GitHub Logo",
-                modifier=modifier.padding(vertical=4.dp)
-                )
-            Text(
-                text = "/github/atharva-potdar"
-            )
-        }
-
+                .padding(vertical = 4.dp)
+                .size(iconSize)
+        )
+        Text(
+            text = "/$site/$handle"
+        )
     }
 }
 
