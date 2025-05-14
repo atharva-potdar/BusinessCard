@@ -10,6 +10,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -33,10 +34,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.core.net.toUri
 import com.anp.businesscard.ui.theme.BusinessCardTheme
 
@@ -68,13 +69,13 @@ fun BusinessCard(name: String, email: String, phoneNumber: String, modifier: Mod
         verticalArrangement = Arrangement.Center
     ) {
         Text(
-            text = "Hey. I'm $name.",
+            text = "Hey, I'm $name.",
 //            fontSize = 32.sp,
-            style = MaterialTheme.typography.displaySmall
+            style = MaterialTheme.typography.displaySmall, textAlign = TextAlign.Center
         )
         Spacer(modifier = Modifier.height(8.dp))
         Text(
-            text = "Welcome to my business card app.",
+            text = "Here's my business card.",
 //            modifier = Modifier
 ////                .background(
 ////                    color =
@@ -84,14 +85,15 @@ fun BusinessCard(name: String, email: String, phoneNumber: String, modifier: Mod
 ////                        }
 ////                )
 //                .padding(4.dp),
-            style = MaterialTheme.typography.titleLarge
-            )
+            style = MaterialTheme.typography.titleLarge, textAlign = TextAlign.Center
+        )
         Row(
             modifier = Modifier
                 .padding(top = 12.dp)
                 .clickable(enabled = true, onClick = {
                     context.startActivity(Intent(Intent.ACTION_DIAL, "tel:$phoneNumber".toUri()))
                 })
+                .fillMaxWidth(), horizontalArrangement = Arrangement.Center
         ) {
             Icon(Icons.Rounded.Call, contentDescription = "Phone number")
             Spacer(modifier = Modifier.width(4.dp))
@@ -102,7 +104,9 @@ fun BusinessCard(name: String, email: String, phoneNumber: String, modifier: Mod
                 .padding(top = 8.dp)
                 .clickable(enabled = true, onClick = {
                     context.startActivity(Intent(Intent.ACTION_SENDTO, "mailto:$email".toUri()))
-                })) {
+                })
+                .fillMaxWidth(), horizontalArrangement = Arrangement.Center
+        ) {
             Icon(Icons.Rounded.Email, contentDescription = "Email address")
             Spacer(modifier = Modifier.width(4.dp))
             Text(text = email)
@@ -111,8 +115,8 @@ fun BusinessCard(name: String, email: String, phoneNumber: String, modifier: Mod
             "github",
             "atharva-potdar",
             "https://github.com/atharva-potdar",
-            Color(0xFF83AE3D),
-            Color(0xFFB1EA55),
+            Color(0xFF3AA04C),
+            Color(0xFF4CCC63),
             R.drawable.github,
             80.dp
         )
@@ -122,7 +126,7 @@ fun BusinessCard(name: String, email: String, phoneNumber: String, modifier: Mod
             "instagram",
             "atharva___potdar",
             "https://instagram.com/atharva___potdar",
-            Color(0xFFAF247C),
+            Color(0xFFD2148C),
             Color(0xFFEC34A8),
             R.drawable.instagram,
             80.dp
@@ -153,7 +157,7 @@ fun SocialHandle(
     val uriHandler = LocalUriHandler.current
     Spacer(modifier = Modifier.height(24.dp))
     Row(
-        modifier = modifier
+        modifier = Modifier
             .fillMaxWidth()
             .background(
                 color = when (isSystemInDarkTheme()) {
@@ -170,13 +174,18 @@ fun SocialHandle(
         Image(
             painter = painterResource(id = id),
             contentDescription = "$site Logo",
-            modifier = modifier
+            modifier = Modifier
                 .padding(vertical = 8.dp)
                 .size(iconSize)
         )
-        Text(
-            text = "/$site/$handle"
-        )
+        Box (modifier = Modifier.weight(1f),
+            contentAlignment = Alignment.Center) {
+            Text(
+                text = handle,
+                style = MaterialTheme.typography.titleLarge,
+                color = MaterialTheme.colorScheme.onPrimaryContainer
+            )
+        }
     }
 }
 
